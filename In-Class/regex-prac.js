@@ -91,7 +91,7 @@ function findPNG (fileArray) {
 let filesPass= [];
 
 for(let i=0; i < fileArray.length; i++) {
-  let thisFile= fileArray[i].match(/png$/);
+  let thisFile= fileArray[i].match(/\.png$/);
     if(thisFile) {
       filesPass.push(fileArray[i]);
     }
