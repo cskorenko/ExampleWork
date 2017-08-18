@@ -10,4 +10,5 @@ console.log(math.division(2, -3));
 console.log(math.modulo(3, 0));
 console.log(math.modulo(0, 20));
 console.log(math.modulo(3, 8));
+console.log(math.modulo(-13, -12));
 console.log(math.exponents(3, 4));
