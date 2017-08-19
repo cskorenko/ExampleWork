@@ -116,3 +116,116 @@ setTimeout(function () {
 setTimeout(function () {
   console.log('waiting');
 }, 500); //halfsecond
+
+/* Promises are alternatives to callbacks- can chain code together when you have mutliple
+ASYNC calls */
+//CODE HELL BELOW EXAMPLE:
+loadData(function(err,data) {
+  if(err) {
+    //handle error
+  }
+  loadData(function(err, data) {
+    if(err) {
+      //handle error
+    }
+    loadData(function(err, data) {
+      if(err) {
+        //handle error
+      }
+      loadData(function(err, data) {
+        if(err) {
+          //handle error
+        }
+      });
+    });
+  });
+});
+
+//promises examples
+/*sudo code
+loadData()
+  .then(function (data) {
+
+  })
+  .then(function (data) {
+
+  })
+  .then(function (data) {
+
+  })
+  .catch(function (erro) {
+    //handle all the errors
+  })*/
+
+  new Promise((resolve, reject) => {
+    try {
+          //do some operation
+      resolve('value to be passed back');
+    } catch (e) {
+      reject('error to be passed back');
+    }
+    });
+
+//this would be module example to pull from:
+module.exports = {
+  getName: function () {
+    return new Promise((resolve, reject) => {
+      return resolve('Jim');
+    })
+  }
+};
+//with error
+module.exports = {
+  getName: function () {
+    return new Promise((resolve, reject) => {
+      return reject('some error');
+    })
+  }
+};
+
+//exporting & using the module:
+let mod = require('./module');
+mod.getName().then((name) => {
+  console.log(name);
+});
+
+//with error
+let mod = require('./module');
+mod.getName().then((name) => {
+  console.log(name);
+})
+.catch((err) => {
+  console.log(err);
+});
+
+
+//then is used most often: how you get data out of the fn. method on all promises:
+  //takes 1 arg
+  //resolve- data to be passed back to then block
+  //reject- returns errors
+
+//can chain Asynchronous operations synchoronously
+
+let mod = require('./module');
+mod.getName().then((name) => {
+  console.log(name);
+  return mod.getName();
+}).then(data=> {
+  console.log(data);
+})
+.catch((err) => {
+  console.log(err);
+});
+
+//promise.all: method built in and takes 1 arg (array of prommises)
+//will wait for all to be resolved before going into the .then block
+Promise.all([
+  mod.getName(),
+  mod.getName(),
+  mod.getName(),
+  mod.getName()
+]).then((data) => {
+  //will return an array of all resolves
+}).catch((err) => {
+  
+});
