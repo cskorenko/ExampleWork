@@ -65,3 +65,54 @@ const greet= function(name, callback) {
 greet('Spruce', function(data) {
   console.log('the callback was invoked, ' + data.firstname);
 });
+
+//Below example for blocking with fs
+// let fs= require('fs');
+//
+// let contents= fs.readFileSync('textfile.txt', 'utf-8')
+//
+// console.log(contents);
+
+//below example for Asynchronous:
+// let fs= require('fs');
+//
+// console.log('BEFORE ASYNC CALL');
+// fs.readFile('textfile.txt', 'utf-8', function(err, data) {
+//   console.log('READ FILE CALLBACK')
+//   console.log(data);
+// })
+//
+// console.log('AFTER ASYNC CALL');
+
+//using err- readFile on a file that doesn't exist
+let fs= require('fs');
+
+console.log('BEFORE ASYNC CALL');
+fs.readFile('file.txt', 'utf-8', function(err, data) {
+  if(err) {
+    console.log('ERROR');
+    console.log(err);
+    return
+  }
+  console.log('READ FILE CALLBACK')
+  console.log(data);
+})
+
+console.log('AFTER ASYNC CALL');
+
+
+//Problems with callbacks- callback hell or pyramid of doom
+
+//SetTimeOut Fn: a fn built into node & js
+//takes a callback & number of millaseconds to wait to execute
+//create artifical deylays
+
+//setTimeout(callback, numMs);
+
+setTimeout(function () {
+  console.log('Still waiting');
+}, 1000); //one second
+
+setTimeout(function () {
+  console.log('waiting');
+}, 500); //halfsecond
