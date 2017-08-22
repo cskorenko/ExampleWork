@@ -227,5 +227,34 @@ Promise.all([
 ]).then((data) => {
   //will return an array of all resolves
 }).catch((err) => {
-  
+
+});
+
+// Promises
+function getUser(firstName) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      for ( let i =0; i < users.length; i++) {
+        if(users[i].firstName === firstName) {
+          return resolve(users[i]);
+        }
+      }
+      return reject('user not found');
+    }, 200);
+  });
+}
+
+//would export the modules: and on other js application file:
+let database= modules
+
+database.getUser('Spruce')
+.then((user) => {
+  console.log(user);
+  return database.getUserEmail(user.firstName);
+})
+.then((userEmail) => {
+  console.log(userEmail);
+})
+.catch((err) => {
+  console.log(err);
 });
