@@ -230,6 +230,23 @@ Promise.all([
 
 });
 
+//example of promise.all
+let database= module
+let userPromises= []; //just an array that will hold the promises- have to .then to do something with them
+
+userPromises.push(database.getUser('Spruce'));
+userPromises.push(database.getUser('John'));
+userPromises.push(database.getUser('Leslie'));
+userPromises.push(database.getUser('Alex'));
+
+Promise.all(userPromises)
+.then((data) => { //going to be an array of data
+  console.log(data);
+})
+.catch((err) => {
+  console.log(err); //if one is not found then returns all not found 
+});
+
 // Promises
 function getUser(firstName) {
   return new Promise((resolve, reject) => {
