@@ -1,0 +1,196 @@
+Web Architecture & Binary Data
+Protocol: an agreed upon set of rules twp sodes use when communicating
+defines the format and the order of messages btw 2 parties
+
+Five Layer Internet Protocol Stack:
+Top layer - Application (5): front end developers & back end
+          - Transport (4): sometimes back end
+          - Internet or Network (3): Router is a level 3 device
+          - DataLink or Network (2): Switch is a level 2 device
+          - Physical (1)
+
+5: Application-
+  - Samples of protocols on the application layer are:
+    - DHCP: Dynamic Host C protocol
+    - FTP: File Transfer protocol
+    - HTTP
+    - DNS
+  - Basically programs available to us as the end user
+
+4: Transport-
+  - Examples:
+    - TCP: Transmission Control Protocol
+    - UDP- User Datagram Protocol
+  - Focuses strictly on the communication btw processes
+  - How 2 browsers on 2 diff machines are communicating
+
+3: Internet-
+  - Focused on logically communication btw the 2 diff computers on the distributed Network
+  - IP Address
+  - Most run application
+    - IP: Internet Protocol
+
+2: DataLink
+  - Focused on internal communication to a Network
+  - devices on local networks
+  - Push data out
+  - Example:
+    - Ethernet Protocol
+    - MAC address
+
+1: Physical- sometimes considered not a proper layer.
+  - No software runs on the physical layer
+  - it's the infrastructure the internet runs on
+  - hardware the datalink layer runs on
+
+When run on the above it looks like a 'U': i.e. Post on Facebook
+  - What happens is:
+    - Goes through each layer: 5-1
+    - Then back up again: 1-5
+
+TCP/IP: blending of layers 3 & 4
+- Proposed in 1974
+
+Transmission Control Protocol:
+- Manages the assembling of info into packets that are to be transmitted over the Internet
+as well as reassembling received packets from the internet into the original form
+- TCP is the reliable, in order method
+- It is guarenteed that the packets you send will be recieved in the order they where sent in
+
+UDP- not reliable & doesn't guarentee they all arrive to host and the order they arrive in
+
+IP:
+- Handles addressing the packets created by the TCP
+- Lower of the 2 protocols
+
+TCP/IP and Web Dev:
+- responsible for the coomunication btw clients and servers we are concerned
+with as backend web developers
+- We don't work directly in these layers, but it helps us be better at our jobs
+when we know what's going on
+
+HTTP: Layer 5 app protocol
+- developed with HTML in 1989
+- Started out as a way to host & transfer files for academic research
+- the 1st implementation only has one method, GET
+
+HyperText Transfer Protocol:
+- a network protocol used to deliver files and data on the WWW
+- uses a client/server model with clients such as browsersor apps requesting services
+from servers which provide resources such as documents & data
+
+HTTP & TCP: 5 & 4 layer working toghther
+Client initiates a TCP connection to the server on Port 80
+Server will accept the TCP connection from the client
+HTTP Messages are exchanged btw the client & the server
+TCP connection is closed
+
+HTTP Connections
+- Nonpersistent HTTP
+  - At most, one object is sent over
+  - not as common
+- Persistent HTTP
+  - multipule objects can be sent over the same TCP Connections
+  - way more common
+
+HTTP Messages:
+  - Request
+    - client asks for something from the server
+  - Response
+    - server processes the clients request & returns result
+
+HTTP Request:
+  - Typical Request has a type along with some additional info about the Request
+GET EXAMPLE:
+GET /_resources/images/current-students.jps HTTP/1.1
+Host: http://www.uark.edu
+Connection: keep-alive
+User-agent: Mozilla/5.0
+Accept-language: en-US,en
+
+HTTP Verbs:
+  - GET * request used to retrieve data
+  - HEAD
+  - POST * request used to submit a completely new entity (new post on FB)
+  - PUT * request to replace the current representation of something that exsits with something new
+  - DELETE * request to remove
+  - connect
+  - options
+  - TRACE
+  - PATCH
+
+HTTP Response:
+has a status code along with some additional info
+
+HTTP/1.1 200 OK
+Date: full date
+Server: Apache/2.2.15 (red Hat)
+Connection: close
+Content-Length: 60709
+Content-Type: image/jpeg
+Last-Modified: full date
+
+HTTP Status Codes:
+100: Information Response
+200: Success Response
+300: Redirect Response
+400: Client Error Response
+500: Server Error Response
+
+Common Status Codes:
+200: OK
+304: Not modified
+400: Bad Request
+401: Unauthorized
+403: Forbidden
+404: Not found
+500: Internal Server Error
+502: Bad gateway
+503: Service unavailable
+
+MIME Type:
+Stands for Multipurpose Internet Mail Extensions. Originally used for email.
+- tells the browser what type of file the content is
+type/sub-type
+image/jpeg
+- standard for specifying the type of data being sent over the internet. MIME Types
+are used bc file extensions are meaningless on the web
+
+HTTPS:
+  - was created 1994 Netscape for its use in navigator web browser
+  - is a protocol for secure communication on a network by providing an encrypted connection
+
+Will use these protocols more in day to day
+SOAP: Simple Object Access Protocol
+    - web service specification for exchanging structured info
+    - created 1998
+    - uses XML for its message format and relies on HTTP & SMTP for message Transmission
+  SOAP messages
+    - Envelop: defines start & end
+    - Header:
+    - Body: XML data
+    - Fault: info about errors held inside the body
+Benefits:
+  - provide solid way in which to define using Web Service Description Lang
+  Supports stateful operations
+  being xml based made it lang agnostic and platform/transport independent
+Drawbacks:
+  - generally less scaleable and worse performance than REST interfaces bc XML
+  payloads are comparatively large
+  - more restrictive than REST
+
+REST: Representational State Transfer: web services that allow for requesting
+systems to access text representations of resources using a predefined set of stateless operations
+- created in 2000
+
+Benefits:
+  - Performance
+  - Scalability
+  - Simplicity
+  - Modifiable
+
+Rest & HTTP:
+  - rest uses the HTTP verbs to define the behaviors of a Create Read Update Delete (CRUD) interface
+
+- End point- is the host and the path you use to perform a specific action
+See rest.js for examples
