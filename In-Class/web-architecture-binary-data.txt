@@ -1,5 +1,5 @@
 Web Architecture & Binary Data
-Protocol: an agreed upon set of rules twp sodes use when communicating
+Protocol: an agreed upon set of rules two sides use when communicating
 defines the format and the order of messages btw 2 parties
 
 Five Layer Internet Protocol Stack:

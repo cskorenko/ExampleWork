@@ -1,6 +1,6 @@
 //REST use exercises
 /* JSON Place Holder
-
+http://jsonplaceholder.typicode.com
 */
 const http= require('http');
 const baseUrl= 'jsonplaceholder.typicode.com';
