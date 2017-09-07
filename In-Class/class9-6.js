@@ -37,6 +37,10 @@ app.get('/', (req, res) => {
   res.status(200).send('Testing routes is awesome!');
 });
 
+app.get('/tacos', (req, res) => {
+  res.status(200).send('Are delicous!');
+});
+
 app.listen(3000, () => {
   console.log('Listening on Port 3000');
 });
