@@ -1,4 +1,4 @@
-const router= require('express').Router();
+const router = require('express').Router();
 
 const puppies = [
   {
@@ -36,7 +36,7 @@ router.get('/:id', (request, response) => {
 router.post('/', (request, response) => {
   let puppyId = request.body.id;
   puppies.push(request.body);
-  const puppy= getPuppy(puppies, puppyId);
+  const puppy = getPuppy(puppies, puppyId);
   response.status(200).json(puppy);
 });
 
@@ -50,4 +50,4 @@ function getPuppy(arr, id) {
   return puppy;
 };
 
-module.exports= router;
+module.exports = router;

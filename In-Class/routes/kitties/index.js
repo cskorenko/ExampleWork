@@ -1,4 +1,4 @@
-const router= require('express').Router();
+const router = require('express').Router();
 
 const kitties = [
 {
@@ -40,7 +40,7 @@ router.post('/', (request, response) => {
   //for that obj id umber to return it
   const kittyId = request.body.id;   //added body from body parser
   kitties.push(request.body);
-  const kitty= getKitty(kitties, kittyId);
+  const kitty = getKitty(kitties, kittyId);
   response.status(200).json(kitty);
 });
 
@@ -55,4 +55,4 @@ function getKitty(arr, id) {
 }
 
 
-module.exports= router;
+module.exports = router;

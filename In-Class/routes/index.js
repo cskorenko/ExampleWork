@@ -1,7 +1,7 @@
-const router= require('express').Router();
+const router = require('express').Router();
 
-const kitties= require('./kitties');
-const puppies= require('./puppies');
+const kitties = require('./kitties');
+const puppies = require('./puppies');
 
 router.get('/', (request, response) => {
   response.status(200).send('Welcome to Puppies & Kitties!');
