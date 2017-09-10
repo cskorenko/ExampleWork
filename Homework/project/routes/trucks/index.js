@@ -34,3 +34,5 @@ const trucks = [
 router.get('/', (req, res) => {
   res.status(200).json(trucks);
 });
+
+module.exports = router;

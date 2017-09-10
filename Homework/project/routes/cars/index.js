@@ -31,6 +31,8 @@ const cars = [
   },
 ];
 
-router.get('/', (res, req) => {
+router.get('/', (req, res) => {
   res.status(200).json(cars);
 });
+
+module.exports = router;
