@@ -25,12 +25,12 @@ const cars = [
   {
     id: 4,
     name: 'Sammy',
-    make: 'Ford',
+    make: 'Chevy',
     model: 'Spark',
     features: ['4-door', '98 horsepower', '38 mpg'],
   },
 ];
 
-router.use('/', () => {
-
+router.get('/', (res, req) => {
+  res.status(200).json(cars);
 });
