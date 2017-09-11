@@ -40,6 +40,12 @@ router.get('/:id', (req, res) => {
   res.status(200).json(truck);
 });
 
+router.post('/', (req, res) => {
+  let truckId = req.body.id;
+  truck.push(req.body);
+  const car = getTrucks(trucks, truckId);
+  res.status(200).json(truck);
+});
 
 function getTrucks(arr, id){
   let truck;
