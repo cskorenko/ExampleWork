@@ -35,4 +35,21 @@ router.get('/', (req, res) => {
   res.status(200).json(cars);
 });
 
+router.get('/:id', (req, res) => {
+  let car = getCars(cars, req.params.id);
+  res.status(200).json(car);
+});
+
+
+function getCars(arr, id) {
+  let car;
+  for(let i = 0; i < arr.length; i++) {
+    if(id.toString() === arr[i].id.toString()) {
+      car = arr[i]
+    }
+  }
+  return car
+};
+
+
 module.exports = router;

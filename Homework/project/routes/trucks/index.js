@@ -35,4 +35,20 @@ router.get('/', (req, res) => {
   res.status(200).json(trucks);
 });
 
+router.get('/:id', (req, res) => {
+  let truck = getTrucks(trucks, req.params.id);
+  res.status(200).json(truck);
+});
+
+
+function getTrucks(arr, id){
+  let truck;
+  for(let i = 0; i < arr.length; i++) {
+    if(id.toString() === arr[i].id.toString()) {
+      truck = arr[i];
+    }
+  }
+  return truck;
+};
+
 module.exports = router;
