@@ -3,7 +3,7 @@
 function oneWordString (string) {
     if(string.includes(' ')) {
       throw new Error('String is longer than one word');
-    } 
+    }
     return 1;
 }
 
@@ -19,7 +19,6 @@ function oneWordString (string) {
 function stringCallback (string, callback) {
   if(string.includes(' ')) {
     callback(new Error('String is more than one word'));
-
   } else {
     callback(null, 1);
   }
@@ -30,17 +29,14 @@ stringCallback ('Hello', (err, result) => {
     console.log('Error');
     console.log(err);
   } else {
-    console.log('Result');
-    console.log(result);
+    console.log('Result: ', result);
   }
 });
 
 stringCallback ('Hello World', (err, result) => {
   if(err) {
-    console.log('Error');
     console.log(err);
   } else {
-    console.log('Result');
-    console.log(result);
+    console.log('Result: ', result);
   }
 });
