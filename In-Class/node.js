@@ -10,27 +10,28 @@ Now at 8. something
 We've been using 6.11 now going to use node 8.2
 */
 
-//NPM
+// NPM
 /* node package manager (not technially called that)
 you can find tons of libraries on their website
 one of the most popular ways to host javascript modules
   - can be a problem if modules depend on each other
 */
 
-//Learn how to initalize a node project
-//nvm is node version manager- which version your using
+// Learn how to initalize a node project
+// nvm is node version manager- which version your using
 
-//module- is a stand a lone peice of js code that performs some functionalty
-//you can download node modules through npm install (the name) -- save
-//can do @and version to install a specific version of the module
-//.gitignore= anything in this file or folder git won't track/keep updtes on and not push up to github
-//mocha is a framework for testing code- for developing not to run an actual project
+// module- is a stand a lone peice of js code that performs some functionalty
+// you can download node modules through npm install (the name) -- save
+// can do @and version to install a specific version of the module
+// .gitignore= anything in this file or folder git won't track/keep updtes on
+// and not push up to github
+// mocha is a framework for testing code- for developing not to run an actual project
 
-//decpendencies you need to run code
-//dev-dependencies you just need to test code
+// decpendencies you need to run code
+// dev-dependencies you just need to test code
 
-//node is built on the concept of modules: everything is a modules
-//node has its own built in modules: i.e. hhtp & https
+// node is built on the concept of modules: everything is a modules
+// node has its own built in modules: i.e. hhtp & https
 
 /* exercise 1:
 - create a new project/directory
@@ -58,17 +59,20 @@ packaged.json or npm downloading modules of other peoples, but node has standard
 
 Standard libraries:
   1- path module: way to work with directory paths
-  path just evaluates the string we provide it to manupilate or give info on it (doesn't actuallyhave to exsist)
+  path just evaluates the string we provide it to manupilate or give info on it
+  (doesn't actuallyhave to exsist)
     includes diff functions:
       1- basename: to require you just need name of module
         returns the last portion of a path we pass in
-          can supply a file extension as a second argument and it will remove that from the file name
+          can supply a file extension as a second argument and it will remove
+          that from the file name
 
       2- dirname: gives the whole directory of path string and exlucde the file name
       3- resolve: give an absoltue path from strings provided as args
         if you give it a file name it will give you the exact path that file lives in
         file name doesn't need to exist - gives you where it would if created
-        - can also pass in directories and will give you where it would be if created within the sub-folder
+        - can also pass in directories and will give you where it would be if
+        created within the sub-folder
           passed in and the file name
   2- file system module: fs
       1- create files: writeFileSync fn: takes 3 args
@@ -83,9 +87,11 @@ Standard libraries:
 
   event emitter: js pattern that gets used in front-end & back-end
     obj that we can interact with when writing js that can emit events
-      - can listen for when those event occur (ie. click button) then do something when that event happens
+      - can listen for when those event occur (ie. click button) then do
+      something when that event happens
         can call functions: to the event emitter
-    - usual on back-end for subscribing to events when a request is made: can create a new log each time
+    - usual on back-end for subscribing to events when a request is made:
+        can create a new log each time
     - can store fns when an event is emiited
     - 3 args: events (obj), on(fn), emit(fn)
 
