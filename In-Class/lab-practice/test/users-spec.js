@@ -10,5 +10,10 @@ describe('User Module', () => {
 
   it('should have 5 users', () => {
     expect(users.length === 5).to.be.true;
+    expect(users[0]).to.be.an('object');
+    expect(users[1]).to.be.an('object');
+    expect(users[2]).to.be.an('object');
+    expect(users[3]).to.be.an('object');
+    expect(users[4]).to.be.an('object');
   });
 });
