@@ -20,18 +20,18 @@ app.get('/users/:id', (req, res) => {
   // const user = users.filter((userObject) => {
   //   return req.params.id === userObject.id;
   // });
-  res.status(200).send(user[0]);
+  // res.status(200).send(user[0]);
 });
 
 app.post('/', (req, res) => {
   let userCopy = Object.assign({}, req.body);
-  if(helpers.validateUser(userCopy)) {
+  if(helpers.validateInput(userCopy)) {
     userCopy.id = uuidv4();
     userCopy.created = moment(Date.now()).format('YYYY-MM-DD');
     user.push(userCopy);
     res.status(200).json(userCopy);
   } else {
-    res.status(400).send('Invalid User Submission');
+    res.status(500).send('Invalid User Submission');
   }
 });
 
