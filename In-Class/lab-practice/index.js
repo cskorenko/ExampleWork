@@ -2,9 +2,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const user = require('./user');
+const helpers = require('./helpers');
+const errMiddleware = require('./err-middleware');
+
 const uuidv4 = require('uuid/v4');
 const moment = require('moment');
-const helpers = require('./helpers');
 
 const app = express();
 
@@ -14,16 +16,21 @@ app.get('/', (req, res) => {
   res.status(200).json(user);
 });
 
-app.get('/users/:id', (req, res) => {
-  let idUser = getID(user, req.params.id);
-  res.status(200).json(idUser);
-  // const user = users.filter((userObject) => {
-  //   return req.params.id === userObject.id;
-  // });
-  // res.status(200).send(user[0]);
+app.get('/users/:id', (req, res, next) => {
+  // let idUser = getID(user, req.params.id);
+  // res.status(200).json(idUser);
+  const users = user.filter((userObject) => {
+  return req.params.id === userObject.id;
+  });
+
+  if(typeof users[0] === 'undefined') {
+    next('Invalid User ID');
+  } else if (users[0].id === req.params.id) {
+    res.status(200).send(users[0]);
+  }
 });
 
-app.post('/', (req, res) => {
+app.post('/', (req, res, next) => {
   let userCopy = Object.assign({}, req.body);
   if(helpers.validateInput(userCopy)) {
     userCopy.id = uuidv4();
@@ -31,9 +38,12 @@ app.post('/', (req, res) => {
     user.push(userCopy);
     res.status(200).json(userCopy);
   } else {
-    res.status(500).send('Invalid User Submission');
+    next('invalid user data supplied');
+    // res.status(500).send('Invalid User Submission');
   }
 });
+
+app.use(errMiddleware);
 
 app.listen(3001, () => {
   console.log('Listening on Local Port 3001:')
