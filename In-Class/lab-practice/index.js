@@ -23,6 +23,11 @@ app.get('/users/:id', (req, res, next) => {
   return req.params.id === userObject.id;
   });
 
+  // if (users.length > 0) {
+  //res.send;
+  // } else {
+  // next('error');
+  // }
   if(typeof users[0] === 'undefined') {
     next('Invalid User ID');
   } else if (users[0].id === req.params.id) {
