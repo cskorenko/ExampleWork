@@ -18,7 +18,7 @@ app.get('/tracking', (req, res, next) => {
 
   if(!req.query || !req.query.username || !req.query.currentDate) {
     // res.status(403).send('Username or Current Date is undefined').end();
-    next('Username and/or current date is undefined');
+    return next('Username and/or current date is undefined');
   }
 
   const user = req.query.username;
