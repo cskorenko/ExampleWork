@@ -54,15 +54,15 @@ app.listen(3001, () => {
   console.log('Listening on Local Port 3001:')
 });
 
-function getID (arr, id) {
-  let user;
-  for(let i = 0; i < arr.length; i++) {
-    if(id === arr[i].id) {
-      user = arr[i];
-    }
-  }
-  return user;
-}
+// function getID (arr, id) {
+//   let user;
+//   for(let i = 0; i < arr.length; i++) {
+//     if(id === arr[i].id) {
+//       user = arr[i];
+//     }
+//   }
+//   return user;
+// }
 
 // function updateUser (arr, newUser, id) {
 //   for(let i = 0; i < arr.length; i++) {
