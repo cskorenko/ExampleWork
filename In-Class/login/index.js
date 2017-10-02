@@ -26,7 +26,7 @@ app.post('/', (req, res, next) => {
 
     if(!validUser) {
       // res.status(401).end();
-      throw new Error('Invalid User Credentials')
+      throw new Error('Invalid User Credentials');
       // next('Invalid User');
     } else if (validUser) {
       let todayDate = moment(Date.now()).format('YYYY-MM-DD');
