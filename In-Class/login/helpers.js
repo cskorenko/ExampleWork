@@ -20,6 +20,7 @@ function sendRequest (url) {
   });
 }
 
+// console.log(sendRequest('http://localhost:3001/'));
 // function validateUser(users, username, password) {
 //   let user;
 //     for(let i = 0; i < users.length; i++) {
