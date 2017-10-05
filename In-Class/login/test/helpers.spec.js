@@ -1,12 +1,34 @@
 const chai = require('chai');
-const helpers = require('../helpers');
+// const helpers = require('../helpers');
 const userArray = require('../../users/user.js');
 const sinon = require('sinon');
-const sinon-chai = require('sinon-chai');
+const mockery = require('mockery');
 
 const expect = chai.expect;
 
+let helpers;
+
 describe('Helper Utility', () => {
+
+  before(() => {
+    mockery.enable({
+      useCleanCache: true,
+      warnOnReplace: false,
+      warnOnUnregistered: false
+    });
+
+    let requestStub = sinon.stub().resolves({res: {}, body: {}});
+
+    mockery.registerMock('request-promise', requestStub);
+
+    helpers = require('../helpers');
+  });
+
+  after(() => {
+    mockery.disable();
+  });
+
+
   it('should be an object', () => {
     expect(helpers).to.be.an('object');
     expect(helpers).to.have.all.keys([
