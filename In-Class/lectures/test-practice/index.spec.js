@@ -42,9 +42,69 @@ describe('Index File', () => {
     });
   });
 
-  describe('', () => {
-    
+  describe('asyncSortArray', () => {
 
+    it('should be a function', () => {
+      expect(index.asyncSortArray).to.be.a('function');
+    });
 
+    it('should return sorted array when input is correct', (done) => {
+      index.asyncSortArray([3, 5, 6, 1], (err, sortedArr) => {
+        expect(err).to.be.null;
+        expect(sortedArr).to.deep.equal([1, 3, 5, 6]);
+        done();
+      });
+    });
+
+    it('should throw an error when input is incorrect', (done) => {
+      index.asyncSortArray('hello', (err, sortedArr) => {
+        expect(err).to.not.be.null;
+        done();
+      });
+    });
+
+    it('should throw an error when no parameters are entered', (done) => {
+      index.asyncSortArray(undefined, (err, sortedArr) => {
+        expect(err).to.not.be.null;
+        done();
+      });
+    });
+  });
+
+  describe('fetchFromDatabase', () => {
+
+    it('should be a function', () => {
+      expect(index.fetchFromDatabase).to.be.a('function');
+    });
+
+    it('should return the user when input is correct', (done) => {
+      index.fetchFromDatabase(1)
+      .then((user) => {
+        expect(user).to.deep.equal({ name: 'Spruce' });
+        done();
+      }).catch((e) => {
+        done(e);
+      });
+    });
+
+    it('should return an error when input is incorrect', (done) => {
+      index.fetchFromDatabase(3)
+      .then((user) => {
+        done()
+      }).catch((e) => {
+        expect(e).to.not.be.null;
+        done();
+      });
+    });
+
+    it('should return an error when no parameters are entered', (done) => {
+      index.fetchFromDatabase()
+      .then((user) => {
+        done()
+      }).catch((e) => {
+        expect(e).to.not.be.null;
+        done();
+      });
+    });
   });
 });
