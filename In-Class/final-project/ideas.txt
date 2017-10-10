@@ -1,0 +1,6 @@
+Creating a database of donor contact information
+Be able to create a new donor contact
+Be able to update donor contact
+Be able to search by date created/date of last contact/amount donated
+
+Pull in an API?!?

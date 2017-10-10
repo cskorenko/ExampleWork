@@ -31,7 +31,7 @@ function fetchFromDatabase (userId) {
     };
 
     return new Promise(function(resolve, reject) {
-        if (!userId && typeof userId !== 'string') {
+        if (!userId || typeof userId !== 'string') {
             return reject('invalid parameters!');
         }
         const user = users[userId];

@@ -1,0 +1,76 @@
+2 main types:
+  1- Relational Databases/ SQL
+    - organizes content on the relational model of data
+    - Structure Query Language (SQL)
+  2- None relational
+
+Database: an organized collection of related data
+Database Management System(DBMS)- software to interact with database
+Database System: combination of database and database management system
+
+Relational Database Structure:
+  - Tables with column and rows
+  - schema is the 1st column(types of data to keep track of)
+  - attributes domain- i.e. state column can only contain a valid state in the US
+    - first name: may just be a string
+    - zip code: just numbers
+  - rows are record or tuples
+  - each record has to be unique
+
+Normalization & Uniqueness
+  - process of determining the appropriate structure of a database
+  - having a users database with user & addressID & having address database
+
+Keys
+  - PK: Primary Key
+    - candidate key that is selected as preferred
+  - FK: Foreign Key
+    - attribute or set of that matches the primary key for another entity
+  - SK: Super Key
+    - ID column- allows use to identify uniquely a record
+    - could also do first & last name
+    - can be a combination of multiple columns that uniquely identify a specific record
+  - CK: Candidate Key
+    - type of super key that is smallest possible super key to identify a single unique record
+    - ID
+  - Composite Key
+    - Candidate key that has multiple attributes
+    - if no ID could be combination of first name & address
+
+Relational Algebra:
+  - operations you can preform to interact with data
+    - Select:
+      - unary operation (only with single relation)
+      - basic way to interact with data
+      - receive all attributes
+      - basic chart select suburb and get all students in specific suburb
+    Project:
+      - unary operation (only with single relation)
+      - accepts a list of attributes to receive
+      - search suburb and get all the suburbs from your student list
+    Union:
+      - a binary operation(two relations)
+      - combines records from each relation and return those
+      - takes 2 tables and combines into 1 table
+      - both need to have compatible attributes
+    Intersection:
+      - a binary operation(two relations)
+      - takes 2 tables and only returns the results that are in both tables
+      - both need to have compatible attributes
+    Difference:
+      - a binary operation(two relations)
+      - opposite of intersection
+      - 2 tables and returns results that are only in one table not both
+      - both need to have compatible attributes
+    Product:
+      - a binary operation(two relations)
+      - multiply every result set in one table with the other table
+      - merges attributes and returns each record from one table with each record from 2nd table
+    Join:
+      - a binary operation(two relations)
+      - will combine records of different relations & merge to one table
+      - merges FK with the PK from one table to the second
+      - user & depart plus depart & manager merged to user, depart & manager table
+    Division:
+      - a binary operation(two relations)
+      - not popular
