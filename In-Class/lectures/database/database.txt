@@ -39,7 +39,7 @@ Keys
 
 Relational Algebra:
   - operations you can preform to interact with data
-    - Select:
+    - Select: * most popular
       - unary operation (only with single relation)
       - basic way to interact with data
       - receive all attributes
@@ -66,7 +66,7 @@ Relational Algebra:
       - a binary operation(two relations)
       - multiply every result set in one table with the other table
       - merges attributes and returns each record from one table with each record from 2nd table
-    Join:
+    Join: * most popular
       - a binary operation(two relations)
       - will combine records of different relations & merge to one table
       - merges FK with the PK from one table to the second
@@ -74,3 +74,53 @@ Relational Algebra:
     Division:
       - a binary operation(two relations)
       - not popular
+
+  temporary password is generated for root@localhost: Mz?uh:e)P0rO
+
+  Workbench:
+
+  CREATE DATABASE IF NOT EXISTS name;
+  SHOW DATABASES;
+  DROP DATABASE name;
+  CREATE TABLE IF NOT EXISTS name of table(columns with data type for each);
+    - customer(userID INTEGER, firstname TEXT, lastname TEXT, addressID INTEGER);
+  INSERT INTO name of table(list all columns)
+  VALUES (enter in info for each column above);
+
+  QUERY:
+    SELECT * FROM name of table;
+      - * = all
+      SELECT * FROM customer WHERE userID = 123;
+    SELECT column title FROM name of table;
+      SELECT firstname FROM customer;
+
+  UPDATE
+    name change:
+      UPDATE name of table SET column = change item WHERE id = x
+        UPDATE customer SET firstname = 'GARY' WHERE userID = 123;
+
+  MODIFY TABLE:
+    ALTER TABLE customer(table) ADD COLUMN gender(column) TEXT;
+    UPDATE ROWS with new COLUMN
+      - UPDATE customer SET gender = 'F' WHERE  userID IN (456, 789);
+    ALTER TABLE customer ADD COLUMN numOrders INTEGER;
+    UPDATE customer SET numOrders = 12 WHERE userID = 789;
+    SELECT SUM(numOrders) FROM customer;
+
+  GET UNIQUE VALUES OF AN ATTRIBUTE of a specific column
+    SELECT distinct gender FROM customer;
+
+  SELECT* FROM customer WHERE gender = 'F';
+
+  WILDCARD SEARCHES
+    SELECT * FROM customer WHERE firstname LIKE 'Ga_y';
+    SELECT * FROM customer WHERE firstname BETWEEN 'A' AND 'J';
+    SELECT * FROM customer ORDER BY lastname DESC;
+    SELECT * FROM customer ORDER BY lastname ASC;
+    SELECT * FROM customer ORDER BY lastname ASC LIMIT 2;
+    SELECT COUNT(*) FROM customer;
+    SELECT COUNT(*) FROM customer WHERE lastname = 'Smith';
+
+  SELECT customer.firstname, customer.lastname, address.streetnName, address.city (columns you want back)
+  FROM customer (main table to search through- based off customer table)
+  INNER JOIN address ON customer.addressID=address.addressID; (join address to customer using PK/FK relationship)
