@@ -1,0 +1,84 @@
+No SQL database
+horizontal scaling
+
+CAP Theorem- read documentation
+
+1- Use home-brew(brew.sh) to install mongoDB
+  brew install mongodb
+2 - mkdir -p /data/db
+  sudo to overwrite
+  chomd 777 /data/db
+3 - Mongo demon running
+  - mongod
+  - leave running in terminal window
+4 - new terminal window
+  - collection in mongo- equal to table in mysql
+    - mongoimport --db test --collection restaurants --drop --file ~/Downloads/restaurant-data.json
+    - drop- meaning if there drop the duplicate
+  - documents equal to rows/entries in a table
+5 - mongo
+  - show dbs
+    - shows all avaiable databases
+  - use test (database name)
+  - show collections
+    - shows tables/collections available in that database
+6 - run commands in the shell at this point
+  - insert a record into the document
+    example:
+    db.restaurants.insert(  {
+...     "address" : {
+...        "street" : "2 Avenue",
+...        "zipcode" : "10075",
+...        "building" : "1480",
+...        "coord" : [ -73.9557413, 40.7720266 ]
+...     },
+...     "borough" : "Manhattan",
+...     "cuisine" : "Italian",
+...     "grades" : [
+...        {
+...           "date" : ISODate("2014-10-01T00:00:00Z"),
+...           "grade" : "A",
+...           "score" : 11
+...        },
+...        {
+...           "date" : ISODate("2014-01-16T00:00:00Z"),
+...           "grade" : "B",
+...           "score" : 17
+...        }
+...     ],
+...     "name" : "Vella",
+...     "restaurant_id" : "41704620"
+...  });
+
+  - QUERY : create json objects with properties you want to find
+    - db.restaurants.find();
+      - should spit out all entries
+    - Specific params
+      - db.restaurants.find({ "borough": "Manhattan" });
+    - search multiple params
+      - db.restaurants.find({ "borough": "Manhattan", "cuisine": "Italian" });
+    - embedded field: i.e. zipcode in address
+      - db.restaurants.find({ "address.zipcode": "10075" });
+    - getting info from an array
+      - db.restaurants.find({ "grades.grade": "B" });
+      - db.restaurants.find({ "grades.score": {$gt:30} });
+
+  - Updating database
+    - db.restaurants.update({ "name" : "Juni" },
+...     {
+...       $set: { "cuisine": "American (New)" },
+...       $currentDate: { "lastModified": true }
+...     });
+    WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+  - Remove
+    - db.restaurants.remove({ "borough": "Manhattan" });
+
+  - Just 1 flag (remove only 1)
+    - db.restaurants.remove({ "borough": "Queens" }, {justOne: true});
+
+  - remove everything:
+    - db.restaurants.remove({});
+      - removes all collections
+    - db.restaurants.drop();
+      - removes the database
