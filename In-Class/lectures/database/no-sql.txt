@@ -90,3 +90,6 @@ db.restaurants.find({ "borough": "Manhattan"}, {"name": 1 })
   - sort by first one and only return second arg.
 
 How to interact to a MongoDB through Node
+
+can't handle '-' in name:
+  db['node-test'].find({});
