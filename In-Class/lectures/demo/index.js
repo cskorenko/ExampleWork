@@ -1,66 +1,90 @@
-//mongodb.github.io/node ???
+//mongoose
+const express = require('express');
+const mongodb = require('./mongodb.utils');
+const Puppy = require('./puppy-model');
 
-const MongoClient = require('mongodb').MongoClient;
+const app = express();
 
-const uri = 'mongodb://localhost:27017/dbName';
 
-MongoClient.connect(uri, (err,db) => {
-  if(err) {
-    console.log(`Error connecting to database${err}`);
-  }
-  console.log('Connected successfully to database');
+app.get('/', (request, response) => {
+  mongodb.createEventListeners();
+  mongodb.connect();
 
-  insertDocuments(db, () => {
-    updateDocument(db, () => {
-      removeDocument(db, () => {
-        findAllDocuments(db, () => {
-          db.close();
-        });
-      });
-    });
+  Puppy.find({}).exec().then((results) => {
+    response.status(200).json(results);
+    mongodb.disconnect();
+  }).catch((e) =>  {
+    console.log(e);
+    mongodb.disconnect();
   });
-});
+})
+
+// mongodb.createEventListeners();
+// mongodb.connect();
+//
+// //Query Database
+// Puppy.find({ likes: 'snacks' }).exec().then((results) => {
+//   console.log(results);
+//   mongodb.disconnect();
+// }).catch((e) =>  {
+//   console.log(e);
+//   mongodb.disconnect();
+// });
+
+app.listen(3001);
 
 
-function insertDocuments(db, callback) {
-  const collection = db.collection('node-test');
-  const data = [{a : 1}, {a : 2}, {a : 3}];
 
-  collection.insertMany(data, (err, result) => {
-    if (err) {
-      console.log(`Unable to insert documents: ${data}`);
-    }
+//Insert new data
+// const fido = new Puppy({
+//   name: 'Fido',
+//   breed: 'German Shepard',
+//   age: 1,
+//   likes: ['running', 'bones', 'playing fetch'],
+//   dislikes: ['baths']
+// });
+//
+// fido.save().then((result) => {
+//   console.log(result);
+//   mongodb.disconnect();
+// }).catch((err) => {
+//   throw(err);
+//   mongodb.disconnect();
+// });
 
-    console.log('Inserted documents into collection');
-    callback(result);
-  });
-}
 
-function findAllDocuments(db, callback) {
-  const collection = db.collection('node-test');
 
-  collection.find({}).toArray((err, docs) => {
-    console.log('found the following records:');
-    console.log(docs);
-    callback(docs);
-  });
-}
 
-function updateDocument (db, callback) {
-  const collection = db.collection('node-test');
-
-  collection.updateOne({a : 2}, { $set: {b : 1} }, (err, result) => {
-           //find this ^ instance  ^ update/add with this instance only to 1st one
-    console.log('Updated the document with the field a equal to 2');
-    callback(result);
-  });
-}
-
-function removeDocument (db, callback) {
-  const collection = db.collection('node-test');
-
-  collection.deleteOne({a : 3}, (err, result) => {
-    console.log('Removed document where a equals 3');
-    callback(result);
-  });
-}
+// db.on('error', () => {
+//   console.log('Could not connect to database');
+// });
+//
+// db.once('open', () => {
+//   console.log('Connected to the database');
+//
+//   const puppySchema = mongoose.Schema({
+//     name: String,
+//     breed: String,
+//     age: Number,
+//     likes: [String],
+//     dislikes: [String]
+//   });
+//
+//   const Puppy = mongoose.model('Puppy', puppySchema);
+//
+//   const  sprinkles = new Puppy({
+//     name: 'Sprinkles',
+//     breed: 'Dalmatian',
+//     age: 2,
+//     likes: ['snacks', 'swimming', 'playing fetch'],
+//     dislikes: ['all other animals']
+//   });
+//
+//   sprinkles.save((err, result) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//
+//     console.log(result);
+//   });
+// });
