@@ -1,23 +1,45 @@
 //mongoose
 const express = require('express');
+const bodyParser = require('body-parser')
 const mongodb = require('./mongodb.utils');
 const Puppy = require('./puppy-model');
+const errMiddleware = require('./err-middleware');
+const helpers = require('./helpers');
 
 const app = express();
 
+app.use(bodyParser.json());
+mongodb.createEventListeners();
+mongodb.connect();
 
-app.get('/', (request, response) => {
-  mongodb.createEventListeners();
-  mongodb.connect();
 
+app.get('/', (req, res, next) => {
   Puppy.find({}).exec().then((results) => {
-    response.status(200).json(results);
-    mongodb.disconnect();
+    res.status(200).json(results);
   }).catch((e) =>  {
-    console.log(e);
-    mongodb.disconnect();
+    next(e)
   });
-})
+});
+
+app.post('/', (req, res, next) => {
+  let newPuppy = new Puppy({
+    name: req.body.name,
+    breed: req.body.breed,
+    age: req.body.age,
+    likes: req.body.likes,
+    dislikes: req.body.dislikes
+  })
+
+  if(helpers.validatePuppy(newPuppy)) {
+    newPuppy.save().then((result) => {
+      res.status(200).json(newPuppy);
+    }).catch((e) => {
+      next(e);
+    });
+  } else {
+    res.status(401).send('Invalid Puppy Entry');
+  }
+});
 
 // mongodb.createEventListeners();
 // mongodb.connect();
@@ -31,9 +53,9 @@ app.get('/', (request, response) => {
 //   mongodb.disconnect();
 // });
 
+app.use(errMiddleware);
+
 app.listen(3001);
-
-
 
 //Insert new data
 // const fido = new Puppy({
