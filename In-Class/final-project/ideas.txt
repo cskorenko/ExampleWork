@@ -4,3 +4,9 @@ Be able to update donor contact
 Be able to search by date created/date of last contact/amount donated
 
 Pull in an API?!?
+
+Social Network for Breweries:
+login
+update
+post
+comment

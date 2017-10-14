@@ -82,3 +82,11 @@ CAP Theorem- read documentation
       - removes all collections
     - db.restaurants.drop();
       - removes the database
+
+
+Continue on MongoDB:
+
+db.restaurants.find({ "borough": "Manhattan"}, {"name": 1 })
+  - sort by first one and only return second arg.
+
+How to interact to a MongoDB through Node
