@@ -1,0 +1,94 @@
+Data Aggregation & Indexing
+
+DA: operations in a database will process records in that db & return computed RESULTS
+Agg is a pipeline- multi stage transforms into useful data
+
+interfacing with mongo shell in node:
+https://docs.mongodb.com/manual/reference/operator/aggregation/
+
+GROUP:
+db.restaurants.aggregate([{ $group: {"_id":"$borough"} } ] );
+scan all documents & return all unique values for borough
+results: { "_id" : "Missing" }
+         { "_id" : "Queens" }
+         { "_id" : "Bronx" }
+         { "_id" : "Manhattan" }
+         { "_id" : "Staten Island" }
+         { "_id" : "Brooklyn" }
+
+
+db.restaurants.aggregate([
+                        { $group: {"_id":"$borough", "count": { $sum: 1} } }
+                        ] );
+scan all documents & return all unique values for borough and counting each entry and increasing that
+count by 1 each time to return the sum for that unique value for borough.
+results: { "_id" : "Missing", "count" : 51 }
+         { "_id" : "Queens", "count" : 5656 }
+         { "_id" : "Bronx", "count" : 2338 }
+         { "_id" : "Manhattan", "count" : 10260 }
+         { "_id" : "Staten Island", "count" : 969 }
+         { "_id" : "Brooklyn", "count" : 6086 }
+
+Exercise: count how many restaurants exist by cuisine type
+db.restaurants.aggregate([
+                        { $group: {"_id":"$cuisine", "count": { $sum: 1} } }
+                        ] );
+
+Exercise: how many restaurants in each zipcode (embedded property inside address):
+db.restaurants.aggregate([
+                        { $group: {"_id":"$address.zipcode", "count": { $sum: 1} } }
+                        ] );
+
+MATCH:
+find query- pulls all json object info for matching results
+db.restaurants.aggregate([
+                        { $match: {"borough":"Queens", "cuisine":"Brazilian"} }
+                        ]);
+
+Exercise: find all Italian restaurants in zipcode 10462
+db.restaurants.aggregate([
+                        { $match: {"address.zipcode":"10462", "cuisine":"Italian"} }
+                        ]);
+
+find all brazilian restaurants in queens and group them by zipcode and return the count in each
+db.restaurants.aggregate([
+                        { $match: {"borough":"Queens", "cuisine":"Brazilian"} },
+                        { $group: {"_id": "$address.zipcode", "count": {$sum: 1} } }
+                        ]);
+
+
+
+Exercise: Italian Restaurants in each borough
+db.restaurants.aggregate([
+                        { $match: {"cuisine":"Italian"} },
+                        { $group: {"_id": "$borough", "count": {$sum: 1} } }
+                        ]);
+
+Exercise: Name of every german restaurant in the city
+db.restaurants.aggregate([
+                        { $match: {"cuisine":"German"} },
+                        { $group: {"_id": "$name" } }
+                        ]);
+
+
+SORT
+-1 descending
++1 ascending
+db.restaurants.aggregate([
+                        { $match: {"borough":"Queens", "cuisine":"Brazilian"} },
+                        { $group: {"_id": "$address.zipcode", "count": {$sum: 1} } },
+                        { $sort: {"count": -1} }
+                        ]);
+result:
+{ "_id" : "11106", "count" : 3 }
+{ "_id" : "11101", "count" : 2 }
+{ "_id" : "11377", "count" : 1 }
+{ "_id" : "11368", "count" : 1 }
+{ "_id" : "11103", "count" : 1 }
+
+Exercise: Italian by borough sorted from least to greatest
+db.restaurants.aggregate([
+                        { $match: {"cuisine":"Italian"} },
+                        { $group: {"_id": "$borough", "count": {$sum: 1} } },
+                        { $sort: {"count": +1} }
+                        ]);

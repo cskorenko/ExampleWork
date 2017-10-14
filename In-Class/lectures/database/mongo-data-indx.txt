@@ -1,0 +1,73 @@
+Mongo Indexing:
+
+Done to support efficient execution of queries
+If appropriate index exists for a query- you limit # of
+documents to be inspected to find match for query
+
+Index: special data structure that stores small portion of collections database
+set in an easy to traverse form
+
+Types:
+1. Single-Field
+  ascending or descending sorting on any 1 field
+2. Compound
+  multiple field queries
+
+createindex() : admin operation
+  - not something you generally call from code writing
+  - will make in shell
+
+No database access while creating an index
+
+Index Example:
+db.restaurants.getIndexes();
+  - shows all current indexes
+
+db.restaurants.stats();
+  - shows index size
+snippet of result:
+  "nindexes" : 1,
+  "totalIndexSize" : 294912,
+  "indexSizes" : {
+    "_id_" : 294912
+  },
+
+Single Field Index Creation:
+db.restaurants.createIndex( {"cuisine": 1} )
+  - successful creation of cuisine index (1 ascending order):
+    {
+  	 "createdCollectionAutomatically" : false,
+  	  "numIndexesBefore" : 1,
+  	   "numIndexesAfter" : 2,
+  	    "ok" : 1
+    }
+
+    updated stats:
+      "nindexes" : 2,
+      "totalIndexSize" : 438272,
+        "indexSizes" : {
+          "_id_" : 294912,
+          "cuisine_1" : 143360
+                // ^(1 = order defined for cuisine)
+      },
+
+With new cuisine index, look at query for run time
+
+db.restaurants.find({ "borough": "Manhattan"} ).explain();
+  - shows most efficient way to run query
+    "winningPlan" : {
+      "stage" : "COLLSCAN", //(scanning whole collection)
+
+db.restaurants.find({ "cuisine": "Italian"} ).explain();
+  "winningPlan" : {
+    "stage" : "FETCH",
+    "inputStage" : {
+      "stage" : "IXSCAN",
+      "keyPattern" : {
+        "cuisine" : 1
+      },
+      "indexName" : "cuisine_1",
+
+
+Creating a multi field index:
+db.restaurants.createIndex( {"cuisine": 1, "address.zipcode": -1} )
