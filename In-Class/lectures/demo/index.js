@@ -132,6 +132,8 @@ app.use(errMiddleware);
 
 app.listen(3001);
 
+module.exports = app;
+
 //Insert new data
 // const fido = new Puppy({
 //   name: 'Fido',
