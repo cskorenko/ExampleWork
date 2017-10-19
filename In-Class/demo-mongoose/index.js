@@ -4,7 +4,7 @@ const bodyParser = require('body-parser')
 const mongodb = require('./mongodb.utilis');
 const Author = require('./author.model');
 const Book = require('./book.model');
-const helpers = require('./helpers');
+const libraryService = require('./library.service');
 
 mongodb.createEventListeners();
 mongodb.connect();
@@ -76,124 +76,150 @@ app.get('/', (req, res) => {
   res.status(200).send('Welcome to the library!')
 });
 
+app.get('/author', (req, res) => {
+  libraryService.fetchAllAuthors()
+  .then((authorsFetched) => {
+      res.status(200).json(authorsFetched);
+  })
+  .catch((e) => {
+    res.status(500).send(e);
+  });
+});
+
+app.get('/books', (req, res) => {
+  libraryService.fetchAllBooks()
+  .then((booksFetched) => {
+    res.status(200).json(booksFetched);
+  })
+  .catch((e) => {
+    res.status(500).send(e);
+  });
+});
+
 app.get('/firstname', (req, res) => {
   const firstname = req.query.firstname;
 
-  Author.find({ firstname: firstname }).exec()
+  libraryService.fetchAuthorByFirstname(firstname)
     .then((authorResult) => {
       res.status(200).json(authorResult);
     })
     .catch((e) => {
-      res.status(400).send(e);
+      res.status(500).send(e);
     });
 });
 
 app.get('/lastname', (req, res) => {
   const lastname = req.query.lastname;
 
-  Author.find({ lastname: lastname }).exec()
+  libraryService.fetchAuthorByLastname(lastname)
     .then((authorResult) => {
       res.status(200).json(authorResult);
     })
     .catch((e) => {
-      res.status(400).send(e);
+      res.status(500).send(e);
     });
 });
 
 app.get('/title', (req, res) => {
   const title = req.query.title;
 
-  Book.find({ title: title }).exec()
+  libraryService.fetchBookByTitle(title)
     .then((bookResult) => {
       res.status(200).json(bookResult);
     })
     .catch((e) => {
-      res.status(400).send(e);
+      res.status(500).send(e);
     });
 });
 
 app.post('/author', (req, res) => {
-  let author = new Author ({
-    firstname: req.body.firstname,
-    lastname: req.body.lastname
-  });
+  let author = req.body.author
 
-  if(helpers.varifyAuthor(author) === false) {
-    throw new Error('invalid author submission');
-  }
-
-  author.save()
-    .then((result) => {
-      res.status(200).json(result);
+  libraryService.createNewAuthor(author)
+    .then((authorSaved) => {
+      res.status(200).json(authorSaved);
     })
     .catch((e) => {
-      res.status(400).send(e);
+      res.status(500).json(e);
     });
 });
 
 app.post('/book', (req, res) => {
-  let book = new Book ({
-    title: req.body.title
-  });
+  let book = req.body.book;
 
-  if(helpers.varifyBook(book) === false) {
-    throw new Error('invalid book submission');
-  }
-
-  book.save()
-    .then((result) => {
-      res.status(200).json(result);
+  libraryService.createNewBook(book)
+    .then((bookSaved) => {
+      res.status(200).json(bookSaved);
     })
     .catch((e) => {
-      res.status(400).send(e);
+      res.status(500).send(e);
     });
+});
+
+app.post('/delete-author', (req, res) => {
+  let id = req.query.id;
+  Author.findByIdAndRemove(id)
+  .then((result) => {
+    res.status(200).json(result);
+  })
+  .catch((e) =>{
+    res.status(500).send(e);
+  });
+});
+
+app.post('/delete-book', (req, res) => {
+  let id = req.query.id;
+  Book.findByIdAndRemove(id)
+  .then((result) => {
+    res.status(200).json(result);
+  })
+  .catch((e) =>{
+    res.status(500).send(e);
+  });
 });
 
 app.put('/author', (req, res) => {
   let lastname = req.query.lastname;
-  let title = req.query.title;
 
-  let foundBook;
-  Book.find({ title: title }).exec()
-    .then((bookResult) => {
-      foundBook = bookResult[0];
-      return Author.find({ lastname: lastname }).exec()
-    })
+  Author.find({ lastname: lastname }).exec()
     .then((authorResult) => {
       let author = authorResult[0];
-      author.books.push(foundBook._id);
+      author.firstname = req.body.firstname;
+      author.lastname= req.body.lastname;
       return author.save();
     })
-    .then((author) => {
-      res.status(200).json(author);
+    .then((updateAuthor) => {
+      res.status(200).json(updateAuthor);
     })
     .catch((e) => {
-      res.status(400).send(e);
+      res.status(500).send(e);
     });
 });
 
 
 app.put('/book', (req, res) => {
-  let lastname = req.query.lastname;
-  let title = req.query.title;
+  let bookData = req.body.book;
 
-  let foundAuthor;
-  Author.find({ lastname: lastname }).exec()
-    .then((authorResult) => {
-      foundAuthor = authorResult[0];
-      return Book.find({ title: title }).exec()
-    })
-    .then((bookResult) => {
-      let book = bookResult[0];
-      book.author= foundAuthor._id;
-      return book.save();
-    })
-    .then((book) => {
-      res.status(200).json(book);
+  libraryService.updateBook(bookData)
+    .then((bookUpdate) => {
+      res.status(200).json(bookUpdate);
     })
     .catch((e) => {
-      res.status(400).send(e);
+      res.status(500).send(e);
     });
+  //
+  // Book.find({ title: title }).populate('author').exec()
+  //   .then((bookResult) => {
+  //     let book = bookResult[0];
+  //     book.title = req.body.title;
+  //     return book.save();
+  //   })
+  //   .then((updateBook) => {
+  //     res.status(200).json(updateBook);
+  //   })
+  //   .catch((e) => {
+  //     res.status(500).send(e);
+  //   });
 });
 
 app.listen(3000, () => {

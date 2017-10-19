@@ -3,6 +3,9 @@ module.exports = {
   varifyBook
 }
 
+
+
+
 function varifyAuthor (author) {
   if(!author.firstname && !author.lastname) {
     return false;
@@ -11,8 +14,8 @@ function varifyAuthor (author) {
   return true;
 }
 
-function varifyBook (book) {
-  if(!book.title) {
+function varifyBook (title) {
+  if(title !== String) {
     return false;
   }
 
