@@ -6,6 +6,8 @@ const Author = require('./author.model');
 const Book = require('./book.model');
 const libraryService = require('./library.service');
 
+const PORT = process.env.PORT || 8080;
+
 mongodb.createEventListeners();
 mongodb.connect();
 
@@ -73,10 +75,14 @@ const app = express();
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-  res.status(200).send('Welcome to the library!')
+  res.status(200).send('Health Check!');
 });
 
-app.get('/author', (req, res) => {
+// app.get('/', (req, res) => {
+//   res.status(200).send('Welcome to the library!')
+// });
+
+app.get('/authors', (req, res) => {
   libraryService.fetchAllAuthors()
   .then((authorsFetched) => {
       res.status(200).json(authorsFetched);
@@ -221,6 +227,10 @@ app.put('/book', (req, res) => {
   //     res.status(500).send(e);
   //   });
 });
+
+// app.listen(PORT, () => {
+//   console.log(`Listening on port ${PORT}`);
+// });
 
 app.listen(3000, () => {
   console.log('Listening on port 3000');

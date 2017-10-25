@@ -121,7 +121,13 @@ function updateBook(bookToUpdate) {
 
   Book.findById(bookToUpdate.id).populate('author').exec()
     .then((bookResult) => {
-      bookResult.title =   bookToUpdate.title;
+      bookResult.title = bookToUpdate.title;
       return bookResult.save();
+    })
+    .then((updatedBookInfo) => {
+      const infoToReturn = {
+        book: updatedBookInfo
+      }
+      return infoToReturn;
     });
 }

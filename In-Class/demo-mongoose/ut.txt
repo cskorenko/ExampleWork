@@ -1,0 +1,20 @@
+How to export to mlab from local database
+
+mongoexport --db library --collection authors --out authors.json
+mongoexport --db library --collection books --out books.json
+
+run import where you exported above
+
+mongoimport -h ds229435.mlab.com:29435 -d cslibrary -c authors -u libraryuser -p library123 --file authors.json
+mongoimport -h ds229435.mlab.com:29435 -d cslibrary -c books -u libraryuser -p library123 --file books.json
+
+This goes into bash_profile
+source /Users/christineskorenko/Desktop/google-cloud-sdk/completion.bash.inc
+source /Users/christineskorenko/Desktop/google-cloud-sdk/path.bash.inc
+
+
+https://cloud.google.com/appengine/docs/flexible/nodejs/runtime
+
+gcloud app deploy --project robust-cooler-183900
+
+https://robust-cooler-183900.appspot.com
