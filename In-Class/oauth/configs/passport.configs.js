@@ -24,7 +24,7 @@ module.exports = function (passport) {
 
     const query = { 'github.id': profile.id };
     const updates = {
-      $setonInsert: {
+      $setOnInsert: {
         'github.username': profile.username,
         'github.publicRepos': profile._json.public_repos
       }
@@ -36,7 +36,7 @@ module.exports = function (passport) {
         return done(null, results);
       })
       .catch((e) => {
-        return done(err, null);
+        return done(e, null);
       });
   }
 };
